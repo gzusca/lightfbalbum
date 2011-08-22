@@ -13,6 +13,11 @@ $('.album').each(function(index, album) {
 	link: photo.link
       });
     });
-    $(album).galleria({ dataSource: galleriaData, width: 650, height: 500 });
+    $(album).galleria({
+      dataSource: galleriaData,
+      width: 650,
+      height: 500,
+      imageTimeout: 300000
+    });
   });
 });
