@@ -6,26 +6,9 @@
 </head>
 <body>
   <div class="album" data-album-id="268206639857554"></div>
-  <script src="galleria/galleria-1.2.5.min.js"></script>
-  <script src="galleria/themes/classic/galleria.classic.min.js"></script>
-  <script type="text/javascript">
-    $('.album').each(function(index, album) {
-      album = $(album);
-      var album_id = album.data('album-id');
-      $.get('tmp/' + album_id + '.json', function(response) {
-	$(response.data).each(function(index, photo) {
-	  var div = $('<div></div>');
-	  div.attr('id', 'photo-' + album.id);
-	  div.css('display', 'inline-block');
-	  $(div).append('<a href="' + photo.source + '" target="_blank"><img src="' + photo.picture + '" /></a>');
-	  $(album).append(div).append(' ');
-	});
-      }, 'json');
-
-      if (Galleria) {
-        $('.album').galleria({ width: 650, height: 500 });
-      }
-    });
-  </script>
+  <script type="text/javascript" src="galleria/galleria-1.2.5.min.js"></script>
+  <script type="text/javascript" src="galleria/themes/classic/galleria.classic.min.js"></script>
+  <script type="text/javascript" src="lightfbalbum.js"></script>
+  <script type="text/javascript" src="http://graph.facebook.com/268206639857554/photos?limit=100&callback=console.info">
 </body>
 </html>
