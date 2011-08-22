@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+</head>
+<body>
+  <div id="albums"></div>
+  <script type="text/javascript">
+    $.get('tmp/albums.json', function(response) {
+      $(response.data).each(function(index, item) {
+        if (item.type !== "normal") return;
+
+	var div = $('<div></div>');
+	div.attr('id', 'album-' + item.id);
+	div.append('<h3>' + item.name + '</h3>')
+        $('#albums').append(div);
+
+	$.get('tmp/' + item.id + '.json', function(response) {
+	  $(response.data).each(function(index, photo) {
+	    if (item.cover_photo !== photo.id) return;
+
+	    $('#album-' + item.id).append('<a href="' + item.link + '" target="_blank"><img src="' + photo.source + '" /></a>');
+	  });
+	}, 'json');
+
+      });
+    }, 'json');
+  </script>
+</body>
+</html>
