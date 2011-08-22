@@ -5,27 +5,27 @@
   <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
 </head>
 <body>
-  <div id="albums"></div>
+  <div class="album" data-album-id="268206639857554"></div>
+  <script src="galleria/galleria-1.2.5.min.js"></script>
+  <script src="galleria/themes/classic/galleria.classic.min.js"></script>
   <script type="text/javascript">
-    $.get('tmp/albums.json', function(response) {
-      $(response.data).each(function(index, item) {
-        if (item.type !== "normal") return;
+    $('.album').each(function(index, album) {
+      album = $(album);
+      var album_id = album.data('album-id');
+      $.get('tmp/' + album_id + '.json', function(response) {
+	$(response.data).each(function(index, photo) {
+	  var div = $('<div></div>');
+	  div.attr('id', 'photo-' + album.id);
+	  div.css('display', 'inline-block');
+	  $(div).append('<a href="' + photo.source + '" target="_blank"><img src="' + photo.picture + '" /></a>');
+	  $(album).append(div).append(' ');
+	});
+      }, 'json');
 
-	var div = $('<div></div>');
-	div.attr('id', 'album-' + item.id);
-	div.append('<h3>' + item.name + '</h3>')
-        $('#albums').append(div);
-
-	$.get('tmp/' + item.id + '.json', function(response) {
-	  $(response.data).each(function(index, photo) {
-	    if (item.cover_photo !== photo.id) return;
-
-	    $('#album-' + item.id).append('<a href="' + item.link + '" target="_blank"><img src="' + photo.source + '" /></a>');
-	  });
-	}, 'json');
-
-      });
-    }, 'json');
+      if (Galleria) {
+        $('.album').galleria({ width: 650, height: 500 });
+      }
+    });
   </script>
 </body>
 </html>
